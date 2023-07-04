@@ -7,7 +7,7 @@ import {
 
 describe('handleInput', () => {
   describe('InsertText', () => {
-    it('preserves formattedPhoneNumber if new text doesn't have digits', () => {
+    it('preserves formattedPhoneNumber if new text doesn\'t have digits', () => {
             const { formattedPhoneNumber } = handleInput({
       oldFormattedPhoneNumber: '(123) 45',
       newText: 'abc',
