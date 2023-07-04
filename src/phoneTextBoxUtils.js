@@ -54,7 +54,7 @@ function handleInput({
     let digitsSeenCount = 0;
 
     while (cursorPosition < formattedPhoneNumber.length) {
-        if (digitsSeenCount == unformattedCursorPosition) {
+        if (digitsSeenCount === unformattedCursorPosition) {
             break;
         }
 
