@@ -1,25 +1,48 @@
-import { useId, useState } from "react";
-import { validateInput, extractPhoneNumber, formatPhoneNumber } from "./phoneTextBoxUtils";
+import { useId, useState, useRef, useEffect } from "react";
+import { handleInput } from "./phoneTextBoxUtils";
 
 export default function ReactPhoneTextBox() {
-    const id = useId();
-    const [formattedPhoneNumber, setFormattedPhoneNumber] = useState("");
+    const textBoxId = useId();
+    const textBoxRef = useRef();
+    let [formattedPhoneNumber, setFormattedPhoneNumber] = useState("");
+    let [cursorPosition, setCursorPosition] = useState(0);
+
+    useEffect(() => {
+        textBoxRef.current.selectionStart = cursorPosition;
+        textBoxRef.current.selectionEnd = cursorPosition;
+    });
 
     function handleBeforeInput(e) {
-        if (!validateInput(e.data)) {
-            e.preventDefault();
-        }
+        e.preventDefault();
+
+        ({ formattedPhoneNumber, cursorPosition } = handleInput({
+            oldFormattedPhoneNumber: formattedPhoneNumber,
+            newText: e.data ?? "",
+            inputType: e.inputType,
+            selectionStart: textBoxRef.current.selectionStart,
+            selectionEnd: textBoxRef.current.selectionEnd
+        }));
+
+        setFormattedPhoneNumber(formattedPhoneNumber);
+        setCursorPosition(cursorPosition);
     };
 
-    function handleInput(e) {
-        const phoneNumber = extractPhoneNumber(e.target.value);
-        setFormattedPhoneNumber(formatPhoneNumber(phoneNumber));
-    };
+    // HACK: https://github.com/facebook/react/issues/11211
+    // onBeforeInput isn't triggered for Backspace/Delete buttons
+    function handleKeyDown(e) {
+        if (e.key === "Backspace") {
+            e.inputType = "deleteContentBackward";
+            handleBeforeInput(e);
+        } else if (e.key === "Delete") {
+            e.inputType = "deleteContentForward";
+            handleBeforeInput(e);
+        }
+    }
 
     return (
         <div className="container text-center">
-            <input type="tel" id={id} maxLength="16" placeholder="mobile number" autoComplete="off" value={formattedPhoneNumber} onBeforeInput={handleBeforeInput} onInput={handleInput} />
-            <div><label htmlFor={id}>(123) 456-7890</label></div>
+            <input type="tel" id={textBoxId} ref={textBoxRef} maxLength="16" placeholder="mobile number" autoComplete="off" defaultValue={formattedPhoneNumber} onBeforeInput={handleBeforeInput} onKeyDown={handleKeyDown} />
+            <div><label htmlFor={textBoxId}>(123) 456-7890</label></div>
         </div>
     );
 }

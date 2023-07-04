@@ -1,14 +1,22 @@
-import {validateInput, extractPhoneNumber, formatPhoneNumber} from "./phoneTextBoxUtils.js";
+import { handleInput } from "./phoneTextBoxUtils.js";
 
 export default function vanillaPhoneTextBox(element) {
     element.addEventListener("beforeinput", e => {
-        if (!validateInput(e.data)) {
-            e.preventDefault();
-        }
-    });
+        e.preventDefault();
 
-    element.addEventListener("input", () => {
-        const phoneNumber = extractPhoneNumber(element.value);
-        element.value = formatPhoneNumber(phoneNumber);
+        const {
+            formattedPhoneNumber,
+            cursorPosition
+        } = handleInput({
+            oldFormattedPhoneNumber: element.value,
+            newText: e.data ?? "",
+            inputType: e.inputType,
+            selectionStart: element.selectionStart,
+            selectionEnd: element.selectionEnd
+        });
+
+        element.value = formattedPhoneNumber;
+        element.selectionStart = cursorPosition;
+        element.selectionEnd = cursorPosition;
     });
 }

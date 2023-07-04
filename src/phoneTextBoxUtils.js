@@ -1,10 +1,6 @@
 const MAX_PHONE_LENGTH = 10;
 
-function validateInput(inputData) {
-    return /^\d*$/.test(inputData ?? "");
-}
-
-function extractPhoneNumber(formattedPhoneNumber) {
+function extractDigits(formattedPhoneNumber) {
     return formattedPhoneNumber.replace(/\D/g, "").substring(0, MAX_PHONE_LENGTH);
 }
 
@@ -28,4 +24,52 @@ function formatPhoneNumber(phoneNumber) {
     return `(${code}) ${part1}-${part2}`;
 };
 
-export { validateInput, extractPhoneNumber, formatPhoneNumber };
+function handleInput({
+    oldFormattedPhoneNumber,
+    newText,
+    inputType,
+    selectionStart,
+    selectionEnd
+}) {
+    let digitsBeforeSelection = extractDigits(oldFormattedPhoneNumber.substring(0, selectionStart));
+    let digitsAfterSelection = extractDigits(oldFormattedPhoneNumber.substring(selectionEnd));
+    const maxInsertDigitCount = MAX_PHONE_LENGTH - digitsBeforeSelection.length - digitsAfterSelection.length;
+    const insertedDigits = extractDigits(newText).substring(0, maxInsertDigitCount);
+
+    if (selectionStart == selectionEnd) {
+        switch (inputType) {
+            case "deleteContentBackward":
+                digitsBeforeSelection = digitsBeforeSelection.substring(0, digitsBeforeSelection.length - 1);
+                break;
+            case "deleteContentForward":
+                digitsAfterSelection = digitsAfterSelection.substring(1);
+                break;
+        }
+    }
+
+    const phoneNumber = digitsBeforeSelection + insertedDigits + digitsAfterSelection;
+    const formattedPhoneNumber = formatPhoneNumber(phoneNumber);
+    const unformattedCursorPosition = digitsBeforeSelection.length + insertedDigits.length;
+
+    let cursorPosition = 0;
+    let digitsSeenCount = 0;
+
+    while (cursorPosition < formattedPhoneNumber.length) {
+        if (digitsSeenCount == unformattedCursorPosition) {
+            break;
+        }
+
+        if (formattedPhoneNumber[cursorPosition].match(/\d/)) {
+            digitsSeenCount++;
+        }
+
+        cursorPosition++;
+    }
+
+    return {
+        formattedPhoneNumber: formattedPhoneNumber,
+        cursorPosition: cursorPosition
+    };
+}
+
+export { extractDigits, formatPhoneNumber, handleInput };
