@@ -1,5 +1,6 @@
 import { useId, useState, useRef, useEffect } from "react";
-import { handleInput } from "./phoneTextBoxUtils";
+import { handleInput } from "./phoneTextBoxUtils.js";
+import InputType from "./InputType.js";
 
 export default function ReactPhoneTextBox() {
     const textBoxId = useId();
@@ -14,28 +15,31 @@ export default function ReactPhoneTextBox() {
 
     function handleBeforeInput(e) {
         e.preventDefault();
+        handleInputEvent(e.data, InputType.fromEvent(e.inputType));
+    }
 
+    function handleInputEvent(newText, inputType) {
         ({ formattedPhoneNumber, cursorPosition } = handleInput({
             oldFormattedPhoneNumber: formattedPhoneNumber,
-            newText: e.data ?? "",
-            inputType: e.inputType,
+            newText,
+            inputType,
             selectionStart: textBoxRef.current.selectionStart,
             selectionEnd: textBoxRef.current.selectionEnd
         }));
 
         setFormattedPhoneNumber(formattedPhoneNumber);
         setCursorPosition(cursorPosition);
-    };
+    }
 
     // HACK: https://github.com/facebook/react/issues/11211
     // onBeforeInput isn't triggered for Backspace/Delete buttons
     function handleKeyDown(e) {
         if (e.key === "Backspace") {
-            e.inputType = "deleteContentBackward";
-            handleBeforeInput(e);
+            e.preventDefault();
+            handleInputEvent("", InputType.Backspace);
         } else if (e.key === "Delete") {
-            e.inputType = "deleteContentForward";
-            handleBeforeInput(e);
+            e.preventDefault();
+            handleInputEvent("", InputType.Delete);
         }
     }
 

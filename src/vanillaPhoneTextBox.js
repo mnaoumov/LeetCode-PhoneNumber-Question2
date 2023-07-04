@@ -1,3 +1,4 @@
+import InputType from "./InputType.js";
 import { handleInput } from "./phoneTextBoxUtils.js";
 
 export default function vanillaPhoneTextBox(element) {
@@ -10,7 +11,7 @@ export default function vanillaPhoneTextBox(element) {
         } = handleInput({
             oldFormattedPhoneNumber: element.value,
             newText: e.data ?? "",
-            inputType: e.inputType,
+            inputType: InputType.fromEvent(e.inputType),
             selectionStart: element.selectionStart,
             selectionEnd: element.selectionEnd
         });

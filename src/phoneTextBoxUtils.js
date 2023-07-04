@@ -1,3 +1,5 @@
+import InputType from "./InputType.js";
+
 const MAX_PHONE_LENGTH = 10;
 
 function extractDigits(formattedPhoneNumber) {
@@ -36,14 +38,11 @@ function handleInput({
     const maxInsertDigitCount = MAX_PHONE_LENGTH - digitsBeforeSelection.length - digitsAfterSelection.length;
     const insertedDigits = extractDigits(newText).substring(0, maxInsertDigitCount);
 
-    if (selectionStart == selectionEnd) {
-        switch (inputType) {
-            case "deleteContentBackward":
-                digitsBeforeSelection = digitsBeforeSelection.substring(0, digitsBeforeSelection.length - 1);
-                break;
-            case "deleteContentForward":
-                digitsAfterSelection = digitsAfterSelection.substring(1);
-                break;
+    if (selectionStart === selectionEnd) {
+        if (inputType === InputType.Backspace) {
+            digitsBeforeSelection = digitsBeforeSelection.substring(0, digitsBeforeSelection.length - 1);
+        } else if (inputType === InputType.Delete) {
+            digitsAfterSelection = digitsAfterSelection.substring(1);
         }
     }
 
