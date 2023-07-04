@@ -1,6 +1,6 @@
 const Backspace = Symbol("Backspace");
 const Delete = Symbol("Delete");
-const Insert = Symbol("Insert");
+const InsertText = Symbol("InsertText");
 
 function fromEvent(inputTypeStr) {
     switch (inputTypeStr) {
@@ -9,13 +9,13 @@ function fromEvent(inputTypeStr) {
         case "deleteContentForward":
             return Delete;
         default:
-            return Insert;
+            return InsertText;
     }
 }
 
 export default {
     Backspace,
     Delete,
-    Insert,
+    InsertText,
     fromEvent
 };
