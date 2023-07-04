@@ -1,9 +1,9 @@
-import InputType from "./InputType.js";
+import InputType from './InputType.js';
 
 const MAX_PHONE_LENGTH = 10;
 
 function extractDigits(formattedPhoneNumber) {
-    return formattedPhoneNumber.replace(/\D/g, "").substring(0, MAX_PHONE_LENGTH);
+    return formattedPhoneNumber.replace(/\D/g, '').substring(0, MAX_PHONE_LENGTH);
 }
 
 function formatPhoneNumber(phoneNumber) {

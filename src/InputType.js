@@ -1,12 +1,12 @@
-const Backspace = Symbol("Backspace");
-const Delete = Symbol("Delete");
-const InsertText = Symbol("InsertText");
+const Backspace = Symbol('Backspace');
+const Delete = Symbol('Delete');
+const InsertText = Symbol('InsertText');
 
 function fromEvent(inputTypeStr) {
     switch (inputTypeStr) {
-        case "deleteContentBackward":
+        case 'deleteContentBackward':
             return Backspace;
-        case "deleteContentForward":
+        case 'deleteContentForward':
             return Delete;
         default:
             return InsertText;

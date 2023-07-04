@@ -1,11 +1,11 @@
-import { useId, useState, useRef, useEffect } from "react";
-import { handleInput } from "./phoneTextBoxUtils.js";
-import InputType from "./InputType.js";
+import { useId, useState, useRef, useEffect } from 'react';
+import { handleInput } from './phoneTextBoxUtils.js';
+import InputType from './InputType.js';
 
 export default function ReactPhoneTextBox() {
     const textBoxId = useId();
     const textBoxRef = useRef();
-    let [formattedPhoneNumber, setFormattedPhoneNumber] = useState("");
+    let [formattedPhoneNumber, setFormattedPhoneNumber] = useState('');
     let [cursorPosition, setCursorPosition] = useState(0);
 
     useEffect(() => {
@@ -34,18 +34,18 @@ export default function ReactPhoneTextBox() {
     // HACK: https://github.com/facebook/react/issues/11211
     // onBeforeInput isn't triggered for Backspace/Delete buttons
     function handleKeyDown(e) {
-        if (e.key === "Backspace") {
+        if (e.key === 'Backspace') {
             e.preventDefault();
-            handleInputEvent("", InputType.Backspace);
-        } else if (e.key === "Delete") {
+            handleInputEvent('', InputType.Backspace);
+        } else if (e.key === 'Delete') {
             e.preventDefault();
-            handleInputEvent("", InputType.Delete);
+            handleInputEvent('', InputType.Delete);
         }
     }
 
     return (
-        <div className="container text-center">
-            <input type="tel" id={textBoxId} ref={textBoxRef} maxLength="16" placeholder="mobile number" autoComplete="off" defaultValue={formattedPhoneNumber} onBeforeInput={handleBeforeInput} onKeyDown={handleKeyDown} />
+        <div className='container text-center'>
+            <input type='tel' id={textBoxId} ref={textBoxRef} maxLength='16' placeholder='mobile number' autoComplete='off' defaultValue={formattedPhoneNumber} onBeforeInput={handleBeforeInput} onKeyDown={handleKeyDown} />
             <div><label htmlFor={textBoxId}>(123) 456-7890</label></div>
         </div>
     );
