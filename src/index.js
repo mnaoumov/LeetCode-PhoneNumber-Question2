@@ -9,7 +9,7 @@ const rootElement = document.getElementById('reactPhoneTextBox');
 const root = createRoot(rootElement);
 
 root.render(
-    <StrictMode>
-        <ReactPhoneTextBox />
-    </StrictMode>
+  <StrictMode>
+    <ReactPhoneTextBox />
+  </StrictMode>
 );

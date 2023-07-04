@@ -16,102 +16,102 @@ let textBox;
 // HACK: https://github.com/facebook/react/issues/11211
 // React dispatchEvent doesn't trigger onBeforeInput listener, that's why we need to trigger it manually in a hacky way
 function triggerBeforeInput() {
-    const reactPropsKey = Object.keys(textBox).find(k => k.startsWith('__reactProps$'));
-    const onBeforeInput = textBox[reactPropsKey].onBeforeInput;
+  const reactPropsKey = Object.keys(textBox).find(k => k.startsWith('__reactProps$'));
+  const onBeforeInput = textBox[reactPropsKey].onBeforeInput;
 
-    act(() => {
-        onBeforeInput(new InputEvent('beforeinput', {
-            data: '5b6c7d',
-            bubbles: true,
-            inputType: 'insertText'
-        }));
-    });
+  act(() => {
+    onBeforeInput(new InputEvent('beforeinput', {
+      data: '5b6c7d',
+      bubbles: true,
+      inputType: 'insertText'
+    }));
+  });
 }
 
 beforeEach(async () => {
-    user = userEvent.setup();
-    render(<ReactPhoneTextBox />);
-    textBox = await screen.findByRole('textbox');
-    textBox.focus();
+  user = userEvent.setup();
+  render(<ReactPhoneTextBox />);
+  textBox = await screen.findByRole('textbox');
+  textBox.focus();
 });
 
 afterEach(() => {
-    jest.restoreAllMocks();
+  jest.restoreAllMocks();
 });
 
 it('calls handleInput on beforeInput', () => {
-    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name);
+  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name);
 
-    textBox.value = '(123) 4';
-    textBox.selectionStart = 2;
-    textBox.selectionEnd = 4;
+  textBox.value = '(123) 4';
+  textBox.selectionStart = 2;
+  textBox.selectionEnd = 4;
 
-    triggerBeforeInput();
+  triggerBeforeInput();
 
-    expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
-        newText: '5b6c7d',
-        selectionStart: 2,
-        selectionEnd: 4
-    }));
+  expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
+    newText: '5b6c7d',
+    selectionStart: 2,
+    selectionEnd: 4
+  }));
 });
 
 it('calls InputType.fromEvent on beforeInput', () => {
-    jest.spyOn(InputType, InputType.fromEvent.name);
+  jest.spyOn(InputType, InputType.fromEvent.name);
 
-    triggerBeforeInput();
+  triggerBeforeInput();
 
-    expect(InputType.fromEvent).toBeCalled();
+  expect(InputType.fromEvent).toBeCalled();
 });
 
 it('calls handleInput with InputType.Backspace on keypress', async () => {
-    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name);
+  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name);
 
-    await user.keyboard('{Backspace}');
+  await user.keyboard('{Backspace}');
 
-    expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
-        inputType: InputType.Backspace
-    }));
+  expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
+    inputType: InputType.Backspace
+  }));
 });
 
 it('calls handleInput with InputType.Delete on keypress', async () => {
-    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name)
+  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name)
 
-    await user.keyboard('{Delete}');
+  await user.keyboard('{Delete}');
 
-    expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
-        inputType: InputType.Delete
-    }));
+  expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
+    inputType: InputType.Delete
+  }));
 });
 
 it('sets formattedPhoneNumber from handleInput', () => {
-    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
-        formattedPhoneNumber: '(123) 45',
-        cursorPosition: 3
-    }));
+  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
+    formattedPhoneNumber: '(123) 45',
+    cursorPosition: 3
+  }));
 
-    triggerBeforeInput();
+  triggerBeforeInput();
 
-    expect(textBox.value).toBe('(123) 45');
+  expect(textBox.value).toBe('(123) 45');
 });
 
 it('sets selectionStart from handleInput', () => {
-    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
-        formattedPhoneNumber: '(123) 45',
-        cursorPosition: 3
-    }));
+  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
+    formattedPhoneNumber: '(123) 45',
+    cursorPosition: 3
+  }));
 
-    triggerBeforeInput();
+  triggerBeforeInput();
 
-    expect(textBox.selectionStart).toBe(3);
+  expect(textBox.selectionStart).toBe(3);
 });
 
 it('sets selectionEnd from handleInput', () => {
-    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
-        formattedPhoneNumber: '(123) 45',
-        cursorPosition: 3
-    }));
+  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
+    formattedPhoneNumber: '(123) 45',
+    cursorPosition: 3
+  }));
 
-    triggerBeforeInput();
+  triggerBeforeInput();
 
-    expect(textBox.selectionEnd).toBe(3);
+  expect(textBox.selectionEnd).toBe(3);
 });
