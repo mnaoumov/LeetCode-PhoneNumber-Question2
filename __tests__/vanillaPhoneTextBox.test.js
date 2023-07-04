@@ -6,11 +6,15 @@ import vanillaPhoneTextBox from "../src/vanillaPhoneTextBox.js"
 import * as phoneTextBoxUtilsModule from "../src/phoneTextBoxUtils.js"
 import InputType from "../src/InputType.js";
 
-let element;
+let textBox;
+
+function triggerBeforeInput() {
+    return textBox.dispatchEvent(new InputEvent("beforeinput", { data: "5b6c7d" }));
+}
 
 beforeEach(() => {
-    element = document.createElement("input");
-    vanillaPhoneTextBox(element);
+    textBox = document.createElement("input");
+    vanillaPhoneTextBox(textBox);
 });
 
 afterEach(() => {
@@ -19,10 +23,11 @@ afterEach(() => {
 
 it("calls handleInput on beforeInput", () => {
     jest.spyOn(phoneTextBoxUtilsModule, "handleInput");
-    element.value = "(123) 45"
-    element.selectionStart = 2;
-    element.selectionEnd = 4;
-    element.dispatchEvent(new InputEvent("beforeinput", { data: "5b6c7d" }));
+    textBox.value = "(123) 45"
+    textBox.selectionStart = 2;
+    textBox.selectionEnd = 4;
+
+    triggerBeforeInput();
 
     expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
         oldFormattedPhoneNumber: "(123) 45",
@@ -34,6 +39,41 @@ it("calls handleInput on beforeInput", () => {
 
 it("calls InputType.fromEvent on beforeInput", () => {
     jest.spyOn(InputType, "fromEvent");
-    element.dispatchEvent(new InputEvent("beforeinput", { data: "5b6c7d" }));
+
+    triggerBeforeInput();
+
     expect(InputType.fromEvent).toBeCalled();
+});
+
+it("sets formattedPhoneNumber from handleInput", () => {
+    jest.spyOn(phoneTextBoxUtilsModule, "handleInput").mockImplementation(() => ({
+        formattedPhoneNumber: "(123) 45",
+        cursorPosition: 3
+    }));
+
+    triggerBeforeInput();
+
+    expect(textBox.value).toBe("(123) 45");
+});
+
+it("sets selectionStart from handleInput", () => {
+    jest.spyOn(phoneTextBoxUtilsModule, "handleInput").mockImplementation(() => ({
+        formattedPhoneNumber: "(123) 45",
+        cursorPosition: 3
+    }));
+
+    triggerBeforeInput();
+
+    expect(textBox.selectionStart).toBe(3);
+});
+
+it("sets selectionEnd from handleInput", () => {
+    jest.spyOn(phoneTextBoxUtilsModule, "handleInput").mockImplementation(() => ({
+        formattedPhoneNumber: "(123) 45",
+        cursorPosition: 3
+    }));
+
+    triggerBeforeInput();
+
+    expect(textBox.selectionEnd).toBe(3);
 });

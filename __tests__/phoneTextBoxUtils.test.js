@@ -1,54 +1,267 @@
+import InputType from "../src/InputType.js";
 import {
-    validateInput,
-    extractPhoneNumber,
+    handleInput,
+    extractDigits,
     formatPhoneNumber
 } from "../src/phoneTextBoxUtils.js";
 
-describe("validateInput", () => {
-    it("returns true for empty input", () => {
-        expect(validateInput("")).toBe(true);
+describe("handleInput", () => {
+    describe("InsertText", () => {
+        it("preserves formattedPhoneNumber if new text doesn't have digits", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 45",
+                newText: "abc",
+                inputType: InputType.InsertText,
+                selectionStart: 8,
+                selectionEnd: 8
+            });
+            expect(formattedPhoneNumber).toBe("(123) 45");
+        });
+
+        it("adds digits to the end", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 45",
+                newText: "678",
+                inputType: InputType.InsertText,
+                selectionStart: 8,
+                selectionEnd: 8
+            });
+            expect(formattedPhoneNumber).toBe("(123) 456-78");
+        });
+
+        it("adds digits to the beginning", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 45",
+                newText: "678",
+                inputType: InputType.InsertText,
+                selectionStart: 0,
+                selectionEnd: 0
+            });
+            expect(formattedPhoneNumber).toBe("(678) 123-45");
+        });
+
+        it("adds digits in the middle", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 45",
+                newText: "678",
+                inputType: InputType.InsertText,
+                selectionStart: 3,
+                selectionEnd: 3
+            });
+            expect(formattedPhoneNumber).toBe("(126) 783-45");
+        });
+
+        it("inserts digits only", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 45",
+                newText: "6a7b8c",
+                inputType: InputType.InsertText,
+                selectionStart: 3,
+                selectionEnd: 3
+            });
+            expect(formattedPhoneNumber).toBe("(126) 783-45");
+        });
+
+        it("inserts not more than 10 letters", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 45",
+                newText: "1234567890",
+                inputType: InputType.InsertText,
+                selectionStart: 3,
+                selectionEnd: 3
+            });
+            expect(formattedPhoneNumber).toBe("(121) 234-5345");
+        });
+
+        it("replaces existing digits if has selection", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "1234",
+                inputType: InputType.InsertText,
+                selectionStart: 3,
+                selectionEnd: 8
+            });
+            expect(formattedPhoneNumber).toBe("(121) 234-678");
+        });
+
+        it("moves cursor after last inserted digit", () => {
+            const { cursorPosition } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "1234",
+                inputType: InputType.InsertText,
+                selectionStart: 3,
+                selectionEnd: 8
+            });
+            expect(cursorPosition).toBe(9);
+        });
     });
 
-    it("returns true for null input", () => {
-        expect(validateInput(null)).toBe(true);
+    describe("Backspace", () => {
+        it("deletes selected digits on Backspace", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Backspace,
+                selectionStart: 3,
+                selectionEnd: 8
+            });
+            expect(formattedPhoneNumber).toBe("(126) 78");
+        });
+
+        it("deletes digit to the left", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Backspace,
+                selectionStart: 3,
+                selectionEnd: 3
+            });
+            expect(formattedPhoneNumber).toBe("(134) 567-8");
+        });
+
+        it("does not delete if no digits to the left", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Backspace,
+                selectionStart: 1,
+                selectionEnd: 1
+            });
+            expect(formattedPhoneNumber).toBe("(123) 456-78");
+        });
+
+        it("deletes closest digit to the left", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Backspace,
+                selectionStart: 6,
+                selectionEnd: 6
+            });
+            expect(formattedPhoneNumber).toBe("(124) 567-8");
+        });
+
+        it("moves cursor to selection start", () => {
+            const { cursorPosition } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Backspace,
+                selectionStart: 3,
+                selectionEnd: 8
+            });
+            expect(cursorPosition).toBe(3);
+        });
+
+        it("moves cursor to the left", () => {
+            const { cursorPosition } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Backspace,
+                selectionStart: 3,
+                selectionEnd: 3
+            });
+            expect(cursorPosition).toBe(2);
+        });
+
+        it("moves cursor to the closest digit to the left", () => {
+            const { cursorPosition } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Backspace,
+                selectionStart: 6,
+                selectionEnd: 6
+            });
+            expect(cursorPosition).toBe(3);
+        });
     });
 
-    it("returns true for single digits", () => {
-        for (const inputData of ["0", "5", "9"]) {
-            expect(validateInput(inputData)).toBe(true);
-        }
-    });
+    describe("Delete", () => {
+        it("deletes selected digits", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Delete,
+                selectionStart: 3,
+                selectionEnd: 8
+            });
+            expect(formattedPhoneNumber).toBe("(126) 78");
+        });
 
-    it("returns false for non-digits", () => {
-        for (const inputData of ["A", "a", "Z", "z", ".", "/"]) {
-            expect(validateInput(inputData)).toBe(false);
-        }
-    });
+        it("deletes digit to the right", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Delete,
+                selectionStart: 3,
+                selectionEnd: 3
+            });
+            expect(formattedPhoneNumber).toBe("(124) 567-8");
+        });
 
-    it("returns true for multi-digit strings", () => {
-        for (const inputData of ["12", "123", "1234567890"]) {
-            expect(validateInput(inputData)).toBe(true);
-        }
-    });
+        it("does not delete if no digits to the right", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Delete,
+                selectionStart: 12,
+                selectionEnd: 12
+            });
+            expect(formattedPhoneNumber).toBe("(123) 456-78");
+        });
 
-    it("returns true for strings that contain non-digits", () => {
-        for (const inputData of ["12a", "12.3", "12345b67890"]) {
-            expect(validateInput(inputData)).toBe(false);
-        }
-    });
+        it("deletes closest digit to the right", () => {
+            const { formattedPhoneNumber } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Delete,
+                selectionStart: 4,
+                selectionEnd: 4
+            });
+            expect(formattedPhoneNumber).toBe("(123) 567-8");
+        });
 
-    it("returns true for long multi-digit strings", () => {
-        expect(validateInput("123456789012345678901234567890")).toBe(true);
+        it("moves cursor to selection start", () => {
+            const { cursorPosition } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Delete,
+                selectionStart: 3,
+                selectionEnd: 8
+            });
+            expect(cursorPosition).toBe(3);
+        });
+
+        it("keeps cursor", () => {
+            const { cursorPosition } = handleInput({
+                oldFormattedPhoneNumber: "(123) 456-78",
+                newText: "",
+                inputType: InputType.Delete,
+                selectionStart: 3,
+                selectionEnd: 3
+            });
+            expect(cursorPosition).toBe(3);
+        });
+
+        it("moves cursor if formatting changed", () => {
+            const { cursorPosition } = handleInput({
+                oldFormattedPhoneNumber: "(123) 4",
+                newText: "",
+                inputType: InputType.Delete,
+                selectionStart: 2,
+                selectionEnd: 2
+            });
+            expect(cursorPosition).toBe(1);
+        });
     });
 });
 
-describe("extractPhoneNumber", () => {
+describe("extractDigits", () => {
     it("removes non-digits", () => {
-        expect(extractPhoneNumber("1A2a3Z4a5.6/7-8,9@0#$")).toBe("1234567890");
+        expect(extractDigits("1A2a3Z4a5.6/7-8,9@0#$")).toBe("1234567890");
     });
 
     it("trims too long strings", () => {
-        expect(extractPhoneNumber("12345678901234567890")).toBe("1234567890");
+        expect(extractDigits("12345678901234567890")).toBe("1234567890");
     });
 });
 
