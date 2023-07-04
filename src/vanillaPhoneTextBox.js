@@ -1,5 +1,5 @@
-import InputType from './InputType.js';
-import { handleInput } from './phoneTextBoxUtils.js';
+import InputType from './InputType';
+import { handleInput } from './phoneTextBoxUtils';
 
 export default function vanillaPhoneTextBox(element) {
   element.addEventListener('beforeinput', (e) => {

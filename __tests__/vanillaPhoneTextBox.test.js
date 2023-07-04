@@ -2,9 +2,9 @@
  * @jest-environment jsdom
  */
 
-import vanillaPhoneTextBox from '../src/vanillaPhoneTextBox.js';
-import * as phoneTextBoxUtilsModule from '../src/phoneTextBoxUtils.js';
-import InputType from '../src/InputType.js';
+import vanillaPhoneTextBox from '../src/vanillaPhoneTextBox';
+import * as phoneTextBoxUtilsModule from '../src/phoneTextBoxUtils';
+import InputType from '../src/InputType';
 
 let textBox;
 

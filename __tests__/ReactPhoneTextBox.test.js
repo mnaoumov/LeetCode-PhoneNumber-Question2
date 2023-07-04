@@ -6,9 +6,9 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
-import ReactPhoneTextBox from '../src/ReactPhoneTextBox.js';
-import * as phoneTextBoxUtilsModule from '../src/phoneTextBoxUtils.js';
-import InputType from '../src/InputType.js';
+import ReactPhoneTextBox from '../src/ReactPhoneTextBox';
+import * as phoneTextBoxUtilsModule from '../src/phoneTextBoxUtils';
+import InputType from '../src/InputType';
 
 let user;
 let textBox;

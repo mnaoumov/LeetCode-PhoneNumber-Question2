@@ -1,4 +1,4 @@
-import InputType from '../src/InputType.js';
+import InputType from '../src/InputType';
 import {
   handleInput,
   extractDigits,

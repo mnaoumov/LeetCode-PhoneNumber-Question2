@@ -1,4 +1,4 @@
-import InputType from './InputType.js';
+import InputType from './InputType';
 
 const MAX_PHONE_LENGTH = 10;
 

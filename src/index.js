@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import vanillaPhoneTextBox from './vanillaPhoneTextBox.js';
-import ReactPhoneTextBox from './ReactPhoneTextBox.js';
+import vanillaPhoneTextBox from './vanillaPhoneTextBox';
+import ReactPhoneTextBox from './ReactPhoneTextBox';
 
 vanillaPhoneTextBox(document.getElementById('phone'));
 

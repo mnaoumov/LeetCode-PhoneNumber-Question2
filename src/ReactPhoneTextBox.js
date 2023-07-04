@@ -1,8 +1,8 @@
 import {
   useId, useState, useRef, useEffect,
 } from 'react';
-import { handleInput } from './phoneTextBoxUtils.js';
-import InputType from './InputType.js';
+import { handleInput } from './phoneTextBoxUtils';
+import InputType from './InputType';
 
 export default function ReactPhoneTextBox() {
   const textBoxId = useId();
