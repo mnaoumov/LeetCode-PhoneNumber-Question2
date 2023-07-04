@@ -2,18 +2,18 @@ import InputType from './InputType.js';
 import { handleInput } from './phoneTextBoxUtils.js';
 
 export default function vanillaPhoneTextBox(element) {
-  element.addEventListener('beforeinput', e => {
+  element.addEventListener('beforeinput', (e) => {
     e.preventDefault();
 
     const {
       formattedPhoneNumber,
-      cursorPosition
+      cursorPosition,
     } = handleInput({
       oldFormattedPhoneNumber: element.value,
       newText: e.data ?? '',
       inputType: InputType.fromEvent(e.inputType),
       selectionStart: element.selectionStart,
-      selectionEnd: element.selectionEnd
+      selectionEnd: element.selectionEnd,
     });
 
     element.value = formattedPhoneNumber;

@@ -1,4 +1,6 @@
-import { useId, useState, useRef, useEffect } from 'react';
+import {
+  useId, useState, useRef, useEffect,
+} from 'react';
 import { handleInput } from './phoneTextBoxUtils.js';
 import InputType from './InputType.js';
 
@@ -24,7 +26,7 @@ export default function ReactPhoneTextBox() {
       newText,
       inputType,
       selectionStart: textBoxRef.current.selectionStart,
-      selectionEnd: textBoxRef.current.selectionEnd
+      selectionEnd: textBoxRef.current.selectionEnd,
     }));
 
     setFormattedPhoneNumber(formattedPhoneNumber);
@@ -44,8 +46,8 @@ export default function ReactPhoneTextBox() {
   }
 
   return (
-    <div className='container text-center'>
-      <input type='tel' id={textBoxId} ref={textBoxRef} maxLength='16' placeholder='mobile number' autoComplete='off' defaultValue={formattedPhoneNumber} onBeforeInput={handleBeforeInput} onKeyDown={handleKeyDown} />
+    <div className="container text-center">
+      <input type="tel" id={textBoxId} ref={textBoxRef} maxLength="16" placeholder="mobile number" autoComplete="off" defaultValue={formattedPhoneNumber} onBeforeInput={handleBeforeInput} onKeyDown={handleKeyDown} />
       <div><label htmlFor={textBoxId}>(123) 456-7890</label></div>
     </div>
   );

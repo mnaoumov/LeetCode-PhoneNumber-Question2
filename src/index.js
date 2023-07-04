@@ -1,6 +1,6 @@
-import vanillaPhoneTextBox from './vanillaPhoneTextBox.js';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import vanillaPhoneTextBox from './vanillaPhoneTextBox.js';
 import ReactPhoneTextBox from './ReactPhoneTextBox.js';
 
 vanillaPhoneTextBox(document.getElementById('phone'));
@@ -11,5 +11,5 @@ const root = createRoot(rootElement);
 root.render(
   <StrictMode>
     <ReactPhoneTextBox />
-  </StrictMode>
+  </StrictMode>,
 );

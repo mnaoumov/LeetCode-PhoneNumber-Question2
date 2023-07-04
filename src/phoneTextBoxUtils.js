@@ -7,7 +7,7 @@ function extractDigits(formattedPhoneNumber) {
 }
 
 function formatPhoneNumber(phoneNumber) {
-  const length = phoneNumber.length;
+  const { length } = phoneNumber;
   const PART1_INDEX = 3;
   const PART2_INDEX = 6;
 
@@ -24,14 +24,14 @@ function formatPhoneNumber(phoneNumber) {
   }
 
   return `(${code}) ${part1}-${part2}`;
-};
+}
 
 function handleInput({
   oldFormattedPhoneNumber,
   newText,
   inputType,
   selectionStart,
-  selectionEnd
+  selectionEnd,
 }) {
   let digitsBeforeSelection = extractDigits(oldFormattedPhoneNumber.substring(0, selectionStart));
   let digitsAfterSelection = extractDigits(oldFormattedPhoneNumber.substring(selectionEnd));
@@ -66,8 +66,8 @@ function handleInput({
   }
 
   return {
-    formattedPhoneNumber: formattedPhoneNumber,
-    cursorPosition: cursorPosition
+    formattedPhoneNumber,
+    cursorPosition,
   };
 }
 

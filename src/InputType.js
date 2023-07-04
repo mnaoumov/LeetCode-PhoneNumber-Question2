@@ -17,5 +17,5 @@ export default {
   Backspace,
   Delete,
   InsertText,
-  fromEvent
+  fromEvent,
 };

@@ -4,10 +4,10 @@
 
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import ReactPhoneTextBox from '../src/ReactPhoneTextBox.js';
-import * as phoneTextBoxUtilsModule from '../src/phoneTextBoxUtils.js';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
+import ReactPhoneTextBox from '../src/ReactPhoneTextBox.js';
+import * as phoneTextBoxUtilsModule from '../src/phoneTextBoxUtils.js';
 import InputType from '../src/InputType.js';
 
 let user;
@@ -16,14 +16,14 @@ let textBox;
 // HACK: https://github.com/facebook/react/issues/11211
 // React dispatchEvent doesn't trigger onBeforeInput listener, that's why we need to trigger it manually in a hacky way
 function triggerBeforeInput() {
-  const reactPropsKey = Object.keys(textBox).find(k => k.startsWith('__reactProps$'));
-  const onBeforeInput = textBox[reactPropsKey].onBeforeInput;
+  const reactPropsKey = Object.keys(textBox).find((k) => k.startsWith('__reactProps$'));
+  const { onBeforeInput } = textBox[reactPropsKey];
 
   act(() => {
     onBeforeInput(new InputEvent('beforeinput', {
       data: '5b6c7d',
       bubbles: true,
-      inputType: 'insertText'
+      inputType: 'insertText',
     }));
   });
 }
@@ -51,7 +51,7 @@ it('calls handleInput on beforeInput', () => {
   expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
     newText: '5b6c7d',
     selectionStart: 2,
-    selectionEnd: 4
+    selectionEnd: 4,
   }));
 });
 
@@ -69,24 +69,24 @@ it('calls handleInput with InputType.Backspace on keypress', async () => {
   await user.keyboard('{Backspace}');
 
   expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
-    inputType: InputType.Backspace
+    inputType: InputType.Backspace,
   }));
 });
 
 it('calls handleInput with InputType.Delete on keypress', async () => {
-  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name)
+  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name);
 
   await user.keyboard('{Delete}');
 
   expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
-    inputType: InputType.Delete
+    inputType: InputType.Delete,
   }));
 });
 
 it('sets formattedPhoneNumber from handleInput', () => {
   jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
     formattedPhoneNumber: '(123) 45',
-    cursorPosition: 3
+    cursorPosition: 3,
   }));
 
   triggerBeforeInput();
@@ -97,7 +97,7 @@ it('sets formattedPhoneNumber from handleInput', () => {
 it('sets selectionStart from handleInput', () => {
   jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
     formattedPhoneNumber: '(123) 45',
-    cursorPosition: 3
+    cursorPosition: 3,
   }));
 
   triggerBeforeInput();
@@ -108,7 +108,7 @@ it('sets selectionStart from handleInput', () => {
 it('sets selectionEnd from handleInput', () => {
   jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
     formattedPhoneNumber: '(123) 45',
-    cursorPosition: 3
+    cursorPosition: 3,
   }));
 
   triggerBeforeInput();
