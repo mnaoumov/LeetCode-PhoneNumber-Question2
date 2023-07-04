@@ -2,7 +2,7 @@ import InputType from '../src/InputType';
 import {
   handleInput,
   extractDigits,
-  formatPhoneNumber
+  formatPhoneNumber,
 } from '../src/phoneTextBoxUtils.js';
 
 describe('handleInput', () => {
@@ -13,7 +13,7 @@ describe('handleInput', () => {
         newText: 'abc',
         inputType: InputType.InsertText,
         selectionStart: 8,
-        selectionEnd: 8
+        selectionEnd: 8,
       });
       expect(formattedPhoneNumber).toBe('(123) 45');
     });
@@ -24,7 +24,7 @@ describe('handleInput', () => {
         newText: '678',
         inputType: InputType.InsertText,
         selectionStart: 8,
-        selectionEnd: 8
+        selectionEnd: 8,
       });
       expect(formattedPhoneNumber).toBe('(123) 456-78');
     });
@@ -35,7 +35,7 @@ describe('handleInput', () => {
         newText: '678',
         inputType: InputType.InsertText,
         selectionStart: 0,
-        selectionEnd: 0
+        selectionEnd: 0,
       });
       expect(formattedPhoneNumber).toBe('(678) 123-45');
     });
@@ -46,7 +46,7 @@ describe('handleInput', () => {
         newText: '678',
         inputType: InputType.InsertText,
         selectionStart: 3,
-        selectionEnd: 3
+        selectionEnd: 3,
       });
       expect(formattedPhoneNumber).toBe('(126) 783-45');
     });
@@ -57,7 +57,7 @@ describe('handleInput', () => {
         newText: '6a7b8c',
         inputType: InputType.InsertText,
         selectionStart: 3,
-        selectionEnd: 3
+        selectionEnd: 3,
       });
       expect(formattedPhoneNumber).toBe('(126) 783-45');
     });
@@ -68,7 +68,7 @@ describe('handleInput', () => {
         newText: '1234567890',
         inputType: InputType.InsertText,
         selectionStart: 3,
-        selectionEnd: 3
+        selectionEnd: 3,
       });
       expect(formattedPhoneNumber).toBe('(121) 234-5345');
     });
@@ -79,7 +79,7 @@ describe('handleInput', () => {
         newText: '1234',
         inputType: InputType.InsertText,
         selectionStart: 3,
-        selectionEnd: 8
+        selectionEnd: 8,
       });
       expect(formattedPhoneNumber).toBe('(121) 234-678');
     });
@@ -90,7 +90,7 @@ describe('handleInput', () => {
         newText: '1234',
         inputType: InputType.InsertText,
         selectionStart: 3,
-        selectionEnd: 8
+        selectionEnd: 8,
       });
       expect(cursorPosition).toBe(9);
     });
@@ -103,7 +103,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Backspace,
         selectionStart: 3,
-        selectionEnd: 8
+        selectionEnd: 8,
       });
       expect(formattedPhoneNumber).toBe('(126) 78');
     });
@@ -114,7 +114,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Backspace,
         selectionStart: 3,
-        selectionEnd: 3
+        selectionEnd: 3,
       });
       expect(formattedPhoneNumber).toBe('(134) 567-8');
     });
@@ -125,7 +125,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Backspace,
         selectionStart: 1,
-        selectionEnd: 1
+        selectionEnd: 1,
       });
       expect(formattedPhoneNumber).toBe('(123) 456-78');
     });
@@ -136,7 +136,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Backspace,
         selectionStart: 6,
-        selectionEnd: 6
+        selectionEnd: 6,
       });
       expect(formattedPhoneNumber).toBe('(124) 567-8');
     });
@@ -147,7 +147,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Backspace,
         selectionStart: 3,
-        selectionEnd: 8
+        selectionEnd: 8,
       });
       expect(cursorPosition).toBe(3);
     });
@@ -158,7 +158,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Backspace,
         selectionStart: 3,
-        selectionEnd: 3
+        selectionEnd: 3,
       });
       expect(cursorPosition).toBe(2);
     });
@@ -169,7 +169,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Backspace,
         selectionStart: 6,
-        selectionEnd: 6
+        selectionEnd: 6,
       });
       expect(cursorPosition).toBe(3);
     });
@@ -182,7 +182,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Delete,
         selectionStart: 3,
-        selectionEnd: 8
+        selectionEnd: 8,
       });
       expect(formattedPhoneNumber).toBe('(126) 78');
     });
@@ -193,7 +193,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Delete,
         selectionStart: 3,
-        selectionEnd: 3
+        selectionEnd: 3,
       });
       expect(formattedPhoneNumber).toBe('(124) 567-8');
     });
@@ -204,7 +204,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Delete,
         selectionStart: 12,
-        selectionEnd: 12
+        selectionEnd: 12,
       });
       expect(formattedPhoneNumber).toBe('(123) 456-78');
     });
@@ -215,7 +215,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Delete,
         selectionStart: 4,
-        selectionEnd: 4
+        selectionEnd: 4,
       });
       expect(formattedPhoneNumber).toBe('(123) 567-8');
     });
@@ -226,7 +226,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Delete,
         selectionStart: 3,
-        selectionEnd: 8
+        selectionEnd: 8,
       });
       expect(cursorPosition).toBe(3);
     });
@@ -237,7 +237,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Delete,
         selectionStart: 3,
-        selectionEnd: 3
+        selectionEnd: 3,
       });
       expect(cursorPosition).toBe(3);
     });
@@ -248,7 +248,7 @@ describe('handleInput', () => {
         newText: '',
         inputType: InputType.Delete,
         selectionStart: 2,
-        selectionEnd: 2
+        selectionEnd: 2,
       });
       expect(cursorPosition).toBe(1);
     });

@@ -84,7 +84,8 @@ it('calls handleInput with InputType.Delete on keypress', async () => {
   }));
 });
 
-it('sets formattedPhoneNumber from handleInput',
+it(
+  'sets formattedPhoneNumber from handleInput',
   () => {
     jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
       formattedPhoneNumber: '(123) 45',
@@ -94,9 +95,11 @@ it('sets formattedPhoneNumber from handleInput',
     triggerBeforeInput();
 
     expect(textBox.value).toBe('(123) 45');
-  });
+  },
+);
 
-it('sets selectionStart from handleInput',
+it(
+  'sets selectionStart from handleInput',
   () => {
     jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
       formattedPhoneNumber: '(123) 45',
@@ -106,9 +109,11 @@ it('sets selectionStart from handleInput',
     triggerBeforeInput();
 
     expect(textBox.selectionStart).toBe(3);
-  });
+  },
+);
 
-it('sets selectionEnd from handleInput',
+it(
+  'sets selectionEnd from handleInput',
   () => {
     jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
       formattedPhoneNumber: '(123) 45',
@@ -118,4 +123,5 @@ it('sets selectionEnd from handleInput',
     triggerBeforeInput();
 
     expect(textBox.selectionEnd).toBe(3);
-  });
+  },
+);
