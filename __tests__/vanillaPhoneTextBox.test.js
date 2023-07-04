@@ -4,6 +4,7 @@
 
 import vanillaPhoneTextBox from "../src/vanillaPhoneTextBox.js"
 import * as phoneTextBoxUtilsModule from "../src/phoneTextBoxUtils.js"
+import InputType from "../src/InputType.js";
 
 let element;
 
@@ -16,22 +17,23 @@ afterEach(() => {
     jest.restoreAllMocks();
 });
 
-it("calls validateInput on beforeInput", () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "validateInput");
-    element.dispatchEvent(new InputEvent("beforeinput", { data: "1a2b" }));
-    expect(phoneTextBoxUtilsModule.validateInput).toHaveBeenCalledWith("1a2b");
+it("calls handleInput on beforeInput", () => {
+    jest.spyOn(phoneTextBoxUtilsModule, "handleInput");
+    element.value = "(123) 45"
+    element.selectionStart = 2;
+    element.selectionEnd = 4;
+    element.dispatchEvent(new InputEvent("beforeinput", { data: "5b6c7d" }));
+
+    expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
+        oldFormattedPhoneNumber: "(123) 45",
+        newText: "5b6c7d",
+        selectionStart: 2,
+        selectionEnd: 4
+    }));
 });
 
-it("calls extractPhoneNumber on input", () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "extractPhoneNumber");
-    element.value = "3c4d"
-    element.dispatchEvent(new InputEvent("input"));
-    expect(phoneTextBoxUtilsModule.extractPhoneNumber).toHaveBeenCalledWith("3c4d");
-});
-
-it("calls formatPhoneNumber on input", () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "formatPhoneNumber");
-    jest.spyOn(phoneTextBoxUtilsModule, "extractPhoneNumber").mockReturnValue("5e6f");
-    element.dispatchEvent(new InputEvent("input"));
-    expect(phoneTextBoxUtilsModule.formatPhoneNumber).toHaveBeenCalledWith("5e6f");
+it("calls InputType.fromEvent on beforeInput", () => {
+    jest.spyOn(InputType, "fromEvent");
+    element.dispatchEvent(new InputEvent("beforeinput", { data: "5b6c7d" }));
+    expect(InputType.fromEvent).toBeCalled();
 });
