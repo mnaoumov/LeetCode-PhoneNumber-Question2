@@ -2,12 +2,12 @@
  * @jest-environment jsdom
  */
 
-import "@testing-library/jest-dom"
-import { render, screen } from "@testing-library/react"
-import ReactPhoneTextBox from "../src/ReactPhoneTextBox.js"
-import * as phoneTextBoxUtilsModule from "../src/phoneTextBoxUtils.js"
-import userEvent from '@testing-library/user-event'
-import { act } from 'react-dom/test-utils';
+import "@testing-library/jest-dom";
+import { render, screen } from "@testing-library/react";
+import ReactPhoneTextBox from "../src/ReactPhoneTextBox.js";
+import * as phoneTextBoxUtilsModule from "../src/phoneTextBoxUtils.js";
+import userEvent from "@testing-library/user-event";
+import { act } from "react-dom/test-utils";
 import InputType from "../src/InputType.js";
 
 let user;
@@ -30,7 +30,7 @@ function triggerBeforeInput() {
 
 beforeEach(async () => {
     user = userEvent.setup();
-    render(<ReactPhoneTextBox />)
+    render(<ReactPhoneTextBox />);
     textBox = await screen.findByRole("textbox");
     textBox.focus();
 });
@@ -40,7 +40,7 @@ afterEach(() => {
 });
 
 it("calls handleInput on beforeInput", () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "handleInput");
+    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name);
 
     textBox.value = "(123) 4";
     textBox.selectionStart = 2;
@@ -56,7 +56,7 @@ it("calls handleInput on beforeInput", () => {
 });
 
 it("calls InputType.fromEvent on beforeInput", () => {
-    jest.spyOn(InputType, "fromEvent");
+    jest.spyOn(InputType, InputType.fromEvent.name);
 
     triggerBeforeInput();
 
@@ -64,7 +64,7 @@ it("calls InputType.fromEvent on beforeInput", () => {
 });
 
 it("calls handleInput with InputType.Backspace on keypress", async () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "handleInput");
+    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name);
 
     await user.keyboard("{Backspace}");
 
@@ -74,7 +74,7 @@ it("calls handleInput with InputType.Backspace on keypress", async () => {
 });
 
 it("calls handleInput with InputType.Delete on keypress", async () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "handleInput");
+    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name)
 
     await user.keyboard("{Delete}");
 
@@ -84,7 +84,7 @@ it("calls handleInput with InputType.Delete on keypress", async () => {
 });
 
 it("sets formattedPhoneNumber from handleInput", () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "handleInput").mockImplementation(() => ({
+    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
         formattedPhoneNumber: "(123) 45",
         cursorPosition: 3
     }));
@@ -95,7 +95,7 @@ it("sets formattedPhoneNumber from handleInput", () => {
 });
 
 it("sets selectionStart from handleInput", () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "handleInput").mockImplementation(() => ({
+    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
         formattedPhoneNumber: "(123) 45",
         cursorPosition: 3
     }));
@@ -106,7 +106,7 @@ it("sets selectionStart from handleInput", () => {
 });
 
 it("sets selectionEnd from handleInput", () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "handleInput").mockImplementation(() => ({
+    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
         formattedPhoneNumber: "(123) 45",
         cursorPosition: 3
     }));

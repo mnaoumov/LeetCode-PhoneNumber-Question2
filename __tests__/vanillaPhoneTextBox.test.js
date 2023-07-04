@@ -2,8 +2,8 @@
  * @jest-environment jsdom
  */
 
-import vanillaPhoneTextBox from "../src/vanillaPhoneTextBox.js"
-import * as phoneTextBoxUtilsModule from "../src/phoneTextBoxUtils.js"
+import vanillaPhoneTextBox from "../src/vanillaPhoneTextBox.js";
+import * as phoneTextBoxUtilsModule from "../src/phoneTextBoxUtils.js";
 import InputType from "../src/InputType.js";
 
 let textBox;
@@ -22,8 +22,8 @@ afterEach(() => {
 });
 
 it("calls handleInput on beforeInput", () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "handleInput");
-    textBox.value = "(123) 45"
+    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name);
+    textBox.value = "(123) 45";
     textBox.selectionStart = 2;
     textBox.selectionEnd = 4;
 
@@ -38,7 +38,7 @@ it("calls handleInput on beforeInput", () => {
 });
 
 it("calls InputType.fromEvent on beforeInput", () => {
-    jest.spyOn(InputType, "fromEvent");
+    jest.spyOn(InputType, InputType.fromEvent.name);
 
     triggerBeforeInput();
 
@@ -46,7 +46,7 @@ it("calls InputType.fromEvent on beforeInput", () => {
 });
 
 it("sets formattedPhoneNumber from handleInput", () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "handleInput").mockImplementation(() => ({
+    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
         formattedPhoneNumber: "(123) 45",
         cursorPosition: 3
     }));
@@ -57,7 +57,7 @@ it("sets formattedPhoneNumber from handleInput", () => {
 });
 
 it("sets selectionStart from handleInput", () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "handleInput").mockImplementation(() => ({
+    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
         formattedPhoneNumber: "(123) 45",
         cursorPosition: 3
     }));
@@ -68,7 +68,7 @@ it("sets selectionStart from handleInput", () => {
 });
 
 it("sets selectionEnd from handleInput", () => {
-    jest.spyOn(phoneTextBoxUtilsModule, "handleInput").mockImplementation(() => ({
+    jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
         formattedPhoneNumber: "(123) 45",
         cursorPosition: 3
     }));
