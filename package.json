@@ -6,7 +6,8 @@
   "scripts": {
     "start": "parcel",
     "build": "parcel build",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint ."
   },
   "repository": {
     "type": "git",
