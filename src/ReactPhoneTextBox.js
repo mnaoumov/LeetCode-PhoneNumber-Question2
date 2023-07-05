@@ -7,30 +7,30 @@ import InputType from './InputType';
 export default function ReactPhoneTextBox() {
   const textBoxId = useId();
   const textBoxRef = useRef();
-  let [formattedPhoneNumber, setFormattedPhoneNumber] = useState('');
-  let [cursorPosition, setCursorPosition] = useState(0);
+  const [formattedPhoneNumber, setFormattedPhoneNumber] = useState('');
+  const [cursorPosition, setCursorPosition] = useState(0);
 
   useEffect(() => {
     textBoxRef.current.selectionStart = cursorPosition;
     textBoxRef.current.selectionEnd = cursorPosition;
   });
 
-  function handleBeforeInput(e) {
-    e.preventDefault();
-    handleInputEvent(e.data, InputType.fromEvent(e.inputType));
-  }
-
   function handleInputEvent(newText, inputType) {
-    ({ formattedPhoneNumber, cursorPosition } = handleInput({
+    const { newFormattedPhoneNumber, newCursorPosition } = handleInput({
       oldFormattedPhoneNumber: formattedPhoneNumber,
       newText,
       inputType,
       selectionStart: textBoxRef.current.selectionStart,
       selectionEnd: textBoxRef.current.selectionEnd,
-    }));
+    });
 
-    setFormattedPhoneNumber(formattedPhoneNumber);
-    setCursorPosition(cursorPosition);
+    setFormattedPhoneNumber(newFormattedPhoneNumber);
+    setCursorPosition(newCursorPosition);
+  }
+
+  function handleBeforeInput(e) {
+    e.preventDefault();
+    handleInputEvent(e.data, InputType.fromEvent(e.inputType));
   }
 
   // HACK: https://github.com/facebook/react/issues/11211

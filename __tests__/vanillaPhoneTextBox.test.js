@@ -46,10 +46,11 @@ it('calls InputType.fromEvent on beforeInput', () => {
 });
 
 it('sets formattedPhoneNumber from handleInput', () => {
-  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
-    formattedPhoneNumber: '(123) 45',
-    cursorPosition: 3,
-  }));
+  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name)
+    .mockImplementation(() => ({
+      formattedPhoneNumber: '(123) 45',
+      cursorPosition: 3,
+    }));
 
   triggerBeforeInput();
 
@@ -57,10 +58,11 @@ it('sets formattedPhoneNumber from handleInput', () => {
 });
 
 it('sets selectionStart from handleInput', () => {
-  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
-    formattedPhoneNumber: '(123) 45',
-    cursorPosition: 3,
-  }));
+  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name)
+    .mockImplementation(() => ({
+      formattedPhoneNumber: '(123) 45',
+      cursorPosition: 3,
+    }));
 
   triggerBeforeInput();
 
@@ -68,10 +70,11 @@ it('sets selectionStart from handleInput', () => {
 });
 
 it('sets selectionEnd from handleInput', () => {
-  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name).mockImplementation(() => ({
-    formattedPhoneNumber: '(123) 45',
-    cursorPosition: 3,
-  }));
+  jest.spyOn(phoneTextBoxUtilsModule, phoneTextBoxUtilsModule.handleInput.name)
+    .mockImplementation(() => ({
+      formattedPhoneNumber: '(123) 45',
+      cursorPosition: 3,
+    }));
 
   triggerBeforeInput();
 

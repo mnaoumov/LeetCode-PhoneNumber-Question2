@@ -35,7 +35,8 @@ function handleInput({
 }) {
   let digitsBeforeSelection = extractDigits(oldFormattedPhoneNumber.substring(0, selectionStart));
   let digitsAfterSelection = extractDigits(oldFormattedPhoneNumber.substring(selectionEnd));
-  const maxInsertDigitCount = MAX_PHONE_LENGTH - digitsBeforeSelection.length - digitsAfterSelection.length;
+  const maxInsertDigitCount = MAX_PHONE_LENGTH
+    - digitsBeforeSelection.length - digitsAfterSelection.length;
   const insertedDigits = extractDigits(newText).substring(0, maxInsertDigitCount);
 
   if (selectionStart === selectionEnd) {
@@ -59,10 +60,10 @@ function handleInput({
     }
 
     if (formattedPhoneNumber[cursorPosition].match(/\d/)) {
-      digitsSeenCount++;
+      digitsSeenCount += 1;
     }
 
-    cursorPosition++;
+    cursorPosition += 1;
   }
 
   return {

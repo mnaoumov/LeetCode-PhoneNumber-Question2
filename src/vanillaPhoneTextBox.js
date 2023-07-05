@@ -16,8 +16,10 @@ export default function vanillaPhoneTextBox(element) {
       selectionEnd: element.selectionEnd,
     });
 
-    element.value = formattedPhoneNumber;
-    element.selectionStart = cursorPosition;
-    element.selectionEnd = cursorPosition;
+    Object.assign(element, {
+      value: formattedPhoneNumber,
+      selectionStart: cursorPosition,
+      selectionEnd: cursorPosition,
+    });
   });
 }

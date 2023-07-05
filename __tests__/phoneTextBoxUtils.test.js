@@ -3,7 +3,7 @@ import {
   handleInput,
   extractDigits,
   formatPhoneNumber,
-} from '../src/phoneTextBoxUtils.js';
+} from '../src/phoneTextBoxUtils';
 
 describe('handleInput', () => {
   describe('InsertText', () => {
