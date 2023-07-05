@@ -1,5 +1,5 @@
 {
-  "name": "leetcode-phonenumber-question1",
+  "name": "leetcode-phonenumber-question2",
   "version": "1.0.0",
   "description": "",
   "source": "src/index.html",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mnaoumov/LeetCode-PhoneNumber-Question1.git"
+    "url": "git+https://github.com/mnaoumov/LeetCode-PhoneNumber-Question2.git"
   },
   "keywords": [
     "LeetCode"
@@ -19,9 +19,9 @@
   "author": "mnaoumov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mnaoumov/LeetCode-PhoneNumber-Question1/issues"
+    "url": "https://github.com/mnaoumov/LeetCode-PhoneNumber-Question2/issues"
   },
-  "homepage": "https://github.com/mnaoumov/LeetCode-PhoneNumber-Question1#readme",
+  "homepage": "https://github.com/mnaoumov/LeetCode-PhoneNumber-Question2#readme",
   "devDependencies": {
     "@babel/core": "^7.22.5",
     "@babel/plugin-transform-modules-commonjs": "^7.22.5",
