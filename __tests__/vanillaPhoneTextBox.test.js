@@ -29,7 +29,7 @@ it('calls handleInput on beforeInput', () => {
 
   triggerBeforeInput();
 
-  expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
+  expect(phoneTextBoxUtilsModule.handleInput).toBeCalledWith(expect.objectContaining({
     oldFormattedPhoneNumber: '(123) 45',
     newText: '5b6c7d',
     selectionStart: 2,

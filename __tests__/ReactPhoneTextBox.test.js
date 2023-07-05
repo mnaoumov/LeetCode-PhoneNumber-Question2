@@ -49,7 +49,7 @@ it('calls handleInput on beforeInput', () => {
 
   triggerBeforeInput();
 
-  expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
+  expect(phoneTextBoxUtilsModule.handleInput).toBeCalledWith(expect.objectContaining({
     newText: '5b6c7d',
     selectionStart: 2,
     selectionEnd: 4,
@@ -69,7 +69,7 @@ it('calls handleInput with InputType.Backspace on keypress', async () => {
 
   await user.keyboard('{Backspace}');
 
-  expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
+  expect(phoneTextBoxUtilsModule.handleInput).toBeCalledWith(expect.objectContaining({
     inputType: InputType.Backspace,
   }));
 });
@@ -79,7 +79,7 @@ it('calls handleInput with InputType.Delete on keypress', async () => {
 
   await user.keyboard('{Delete}');
 
-  expect(phoneTextBoxUtilsModule.handleInput).toHaveBeenCalledWith(expect.objectContaining({
+  expect(phoneTextBoxUtilsModule.handleInput).toBeCalledWith(expect.objectContaining({
     inputType: InputType.Delete,
   }));
 });
