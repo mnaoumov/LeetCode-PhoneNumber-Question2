@@ -16,7 +16,10 @@ export default function ReactPhoneTextBox() {
   });
 
   function handleInputEvent(newText, inputType) {
-    const { newFormattedPhoneNumber, newCursorPosition } = handleInput({
+    const {
+      formattedPhoneNumber: newFormattedPhoneNumber,
+      cursorPosition: newCursorPosition
+    } = handleInput({
       oldFormattedPhoneNumber: formattedPhoneNumber,
       newText,
       inputType,
